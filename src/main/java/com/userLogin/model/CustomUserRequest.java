@@ -31,7 +31,12 @@ public class CustomUserRequest {
                 this.username,
                 this.password,
                 "",
+                "",
+                "",
+                "",
+                "",
                 ""
+
         );
     }
 }

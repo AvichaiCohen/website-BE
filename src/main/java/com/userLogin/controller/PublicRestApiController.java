@@ -11,7 +11,7 @@ public class PublicRestApiController {
     @GetMapping("/test1")
     @CrossOrigin
     public ResponseEntity<?> test1(){
-        return ResponseEntity.ok(new TestResponse("API Test 1"));
+        return ResponseEntity.ok(new TestResponse("Logged In"));
     }
 
     @CrossOrigin
