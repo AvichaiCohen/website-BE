@@ -18,9 +18,9 @@ public class UserOrderRepositoryImpl implements UserOrderRepository {
 
 
     @Override
-    public void createOrder(String username) {
-        String sql = "INSERT INTO " + USER_ORDER_TABLE_NAME + " (username) VALUES (?)";
-        jdbcTemplate.update(sql,username);
+    public void createOrder(UserOrder userOrder) {
+        String sql = "INSERT INTO " + USER_ORDER_TABLE_NAME + " (username,order_date,total_price,shipping_address,order_status) VALUES (?,?,?,?,?)";
+        jdbcTemplate.update(sql,userOrder.getUsername(),userOrder.getOrderDate(),userOrder.getTotalPrice(),userOrder.getShippingAddress(),userOrder.getOrderStatus());
     }
 
     @Override

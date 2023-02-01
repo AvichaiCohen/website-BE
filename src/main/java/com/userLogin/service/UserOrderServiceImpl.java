@@ -1,12 +1,15 @@
 package com.userLogin.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.userLogin.model.UserOrder;
+import com.userLogin.model.*;
 import com.userLogin.repository.OrderListRepository;
 import com.userLogin.repository.UserOrderRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,9 +22,27 @@ public class UserOrderServiceImpl implements UserOrderService {
     @Autowired
     private UserOrderRepository userOrderRepository;
 
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ItemService itemService;
+
     @Override
-    public void createOrder(String username) {
-            userOrderRepository.createOrder(username);
+    public void createOrder(UserOrder userOrder) throws Exception {
+//        if (userService.findUserByUsername(userOrder.getUsername()) == null) {
+//            throw new Exception ("not exist");
+//        }else {
+        List<OrderList> orderLists = new ArrayList<>(orderListRepository.getAllOrdersByUsername(userOrder.getUsername()));
+        List<Item> orderItemlist = new ArrayList<>();
+        Long totalPrice = null;
+        for (int i = 0; i < orderLists.size(); i++) {
+            orderItemlist.add(itemService.getItemById(orderLists.get(i).getItemId()));
+            totalPrice += orderItemlist.get(i).getPrice();
+        }
+        String shippingAddress = (userService.findUserByUsername(userOrder.getUsername()).getCountry()) + " " + (userService.findUserByUsername(userOrder.getUsername()).getCity());
+        UserOrder newUserOrder = new UserOrder(null, userOrder.getUsername(), userOrder.getOrderDate(), totalPrice, shippingAddress, OrderStatus.valueOf("CLOSE"));
+        userOrderRepository.createOrder(newUserOrder);
+        System.out.println(totalPrice);
     }
 
     @Override

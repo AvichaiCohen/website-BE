@@ -6,7 +6,7 @@ import com.userLogin.model.UserOrder;
 import java.util.List;
 
 public interface UserOrderService {
-    void createOrder(String username)throws Exception;
+    void createOrder(UserOrder userOrder)throws Exception;
     UserOrder getOrderById(String username,Long orderId);
     void updateOrderById(Long orderId,UserOrder userOrder) throws Exception;
     void deleteOrderById(Long orderId,String username) throws Exception;

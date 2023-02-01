@@ -16,8 +16,8 @@ public class UserOrderController {
 
     @PostMapping(value = "/create")
     @CrossOrigin
-    public void createUserOrder(@RequestParam String username ) throws Exception {
-        userOrderService.createOrder(username);
+    public void createUserOrder(@RequestBody UserOrder userOrder ) throws Exception {
+        userOrderService.createOrder(userOrder);
     }
     @GetMapping(value = "/get")
     @CrossOrigin

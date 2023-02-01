@@ -6,7 +6,7 @@ import com.userLogin.model.UserOrder;
 import java.util.List;
 
 public interface UserOrderRepository {
-    void createOrder(String username);
+    void createOrder(UserOrder userOrder);
     UserOrder getOrderById(String username,Long orderId);
     void updateOrderById(Long orderId,UserOrder userOrder);
     void deleteOrderById(Long orderId);
